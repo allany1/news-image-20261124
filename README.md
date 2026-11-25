@@ -13,7 +13,7 @@ dated 24 Nov 2026 (UTC) and were fact-checked before inclusion; they are held
 in `stories.json` (headline, one-line deck, region for each). `render.py` is
 the Pillow script that generated the image from that data; it is kept for
 transparency and is not needed at run time. The rendered PNG ships in this
-repository as the binary file `entry.png`.
+repository as its single PNG file.
 
 ## Run it
 
@@ -21,10 +21,10 @@ repository as the binary file `entry.png`.
 python3 main.py
 ```
 
-This copies `entry.png` to `/output/entry.png` (creating `/output` if
-needed). `main.py` uses only the Python 3 standard library, runs fully
-offline, and is deterministic — every run produces bytes identical to the
-rendered PNG that ships in the repository.
+This copies the repository's PNG image to `/output/entry.png` (creating
+`/output` if needed). `main.py` uses only the Python 3 standard library,
+runs fully offline, and is deterministic — every run produces bytes
+identical to the rendered PNG that ships in the repository.
 
 ## License
 
