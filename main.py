@@ -1,35 +1,28 @@
 #!/usr/bin/env python3
-"""make.fun entry: 'Sum up 24 November's world news in one image'.
+"""Entry program for the make.fun bounty "Sum up 24 November's world news
+in one image" (news-image-20261124).
 
-The entry image (a 1024x1024 newspaper-style one-pager summarising
-Tuesday 24 November 2026) is stored in this repository as base64 text
-in entry.png.b64, because the repository is kept text-only. This
-program decodes it and writes the original PNG bytes to
-/output/entry.png.
+The entry image ships in this repository as the binary file entry.png
+(a 1024x1024 newspaper-style one-pager of Tuesday 24 November 2026,
+rendered by render.py from stories.json). This program copies it to
+/output/entry.png, where the grader reads it.
 
-Standard library only, fully offline, deterministic: the decoded bytes
-are always identical to the image render.py produced from stories.json.
+Python 3 standard library only; fully offline and deterministic:
+every run writes exactly the bytes of entry.png.
 """
-import base64
 import os
+import shutil
+from pathlib import Path
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "entry.png.b64")
-OUT_DIR = "/output"
-OUT = os.path.join(OUT_DIR, "entry.png")
+HERE = Path(__file__).resolve().parent
+SOURCE = HERE / "entry.png"
+DEST = Path("/output/entry.png")
 
 
 def main():
-    # Read the base64 text asset stored next to this script.
-    with open(SRC, "r", encoding="ascii") as f:
-        encoded = f.read()
-    # Decode it back to the exact original PNG bytes.
-    data = base64.b64decode(encoded)
-    # Write the image where the harness expects it.
-    os.makedirs(OUT_DIR, exist_ok=True)
-    with open(OUT, "wb") as f:
-        f.write(data)
-    print("wrote", OUT, len(data), "bytes")
+    os.makedirs(DEST.parent, exist_ok=True)
+    shutil.copyfile(SOURCE, DEST)
+    print(f"wrote {DEST} ({DEST.stat().st_size} bytes)")
 
 
 if __name__ == "__main__":
